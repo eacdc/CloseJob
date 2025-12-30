@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Completion System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-logo">JC</div>
+          <div class="brand-text">
+            <h1>Job Completion System</h1>
+            <p>Complete jobs and track progress.</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="app-main app-main--home">
+        <section class="intro">
+          <h2>Job Completion</h2>
+          <p>Enter a job number to complete and close the job.</p>
+        </section>
+
+        <!-- Job search -->
+        <section class="panel">
+          <form class="job-search" id="jobSearchForm">
+            <div class="field field--inline">
+              <label for="jobNumber">Job Number</label>
+              <div style="position: relative; display: inline-block; width: 100%;">
+                <input
+                  id="jobNumber"
+                  name="jobNumber"
+                  type="text"
+                  placeholder="Enter job number (4+ digits)"
+                  required
+                  autocomplete="off"
+                />
+                <div id="jobNumberDropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(15, 23, 42, 0.98); border: 1px solid rgba(129, 140, 248, 0.5); border-radius: 0 0 10px 10px; max-height: 200px; overflow-y: auto; z-index: 1000; box-shadow: 0 8px 20px rgba(0,0,0,0.4);">
+                  <!-- Dropdown items will be inserted here -->
+                </div>
+              </div>
+            </div>
+            <button class="primary-btn" type="submit" id="completeBtn">Close</button>
+          </form>
+          <p class="inline-warning" id="jobSearchError" style="display: none;"></p>
+        </section>
+
+        <!-- Section 1: Job details -->
+        <section class="panel panel--collapsible">
+          <header class="panel-header">
+            <h3>Job Details</h3>
+          </header>
+          <div class="panel-body job-details-grid">
+            <div class="field">
+              <label for="clientName">Client Name</label>
+              <input id="clientName" name="clientName" type="text" readonly />
+            </div>
+            <div class="field">
+              <label for="qty">Qty</label>
+              <input id="qty" name="qty" type="number" readonly />
+            </div>
+            <div class="field">
+              <label for="status">Status</label>
+              <input id="status" name="status" type="text" readonly />
+            </div>
+            <div class="field">
+              <label for="closedDate">Closed Date</label>
+              <input id="closedDate" name="closedDate" type="text" readonly />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <span>Job Completion System</span>
+        <span class="divider">•</span>
+        <span>Job Details</span>
+      </footer>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
+
