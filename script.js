@@ -34,7 +34,7 @@ jobNumberInput.addEventListener('input', async (e) => {
   searchTimeout = setTimeout(async () => {
     try {
       console.log('🔍 [FRONTEND] Searching job numbers for:', value);
-      const jobNumbers = await jobsAPI.searchJobNumbers(value);
+      const jobNumbers = await jobsAPI.searchJobNumbersForCompletion(value);
       console.log('🔍 [FRONTEND] Received jobNumbers:', jobNumbers);
       console.log('🔍 [FRONTEND] jobNumbers type:', typeof jobNumbers, 'isArray:', Array.isArray(jobNumbers));
       

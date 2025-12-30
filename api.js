@@ -45,6 +45,8 @@ export const jobsAPI = {
   }),
   // Search job numbers from MSSQL (4+ digits)
   searchJobNumbers: (jobNumberPart) => apiCall(`/jobs/search-numbers/${encodeURIComponent(jobNumberPart)}`),
+  // Search job numbers for completion app (uses direct query, not stored procedure)
+  searchJobNumbersForCompletion: (jobNumberPart) => apiCall(`/jobs/search-numbers-completion/${encodeURIComponent(jobNumberPart)}`),
   // Get job details from MSSQL
   getJobDetails: (jobNumber) => apiCall(`/jobs/details/${encodeURIComponent(jobNumber)}`),
   // Get job details for completion app (with isclose and jobcloseddate)
