@@ -54,6 +54,10 @@ export const jobsAPI = {
   // Complete job - close job in jobbookingjobcard table
   completeJob: (jobNumber) => apiCall(`/jobs/complete/${encodeURIComponent(jobNumber)}`, {
     method: 'POST'
+  }),
+  // Reopen job - set isclose = 0 and clear close fields
+  reopenJob: (jobNumber) => apiCall(`/jobs/reopen/${encodeURIComponent(jobNumber)}`, {
+    method: 'POST'
   })
 };
 

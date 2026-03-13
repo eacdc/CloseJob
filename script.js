@@ -122,16 +122,26 @@ async function fetchJobDetails(jobNumber) {
       document.getElementById('closedDate').value = '-';
     }
     
-    // Disable Complete button if job is already closed (isclose = 1)
+    // Show/hide Close vs Reopen: when closed, disable Close and show Reopen; when open, enable Close and hide Reopen
     const completeBtn = document.getElementById('completeBtn');
+    const reopenBtn = document.getElementById('reopenBtn');
     if (isClosed) {
       completeBtn.disabled = true;
       completeBtn.style.opacity = '0.5';
       completeBtn.style.cursor = 'not-allowed';
+      if (reopenBtn) {
+        reopenBtn.style.display = 'inline-block';
+        reopenBtn.disabled = false;
+        reopenBtn.style.opacity = '1';
+        reopenBtn.style.cursor = 'pointer';
+      }
     } else {
       completeBtn.disabled = false;
       completeBtn.style.opacity = '1';
       completeBtn.style.cursor = 'pointer';
+      if (reopenBtn) {
+        reopenBtn.style.display = 'none';
+      }
     }
   } catch (error) {
     console.error('Error fetching job details:', error);
@@ -146,7 +156,46 @@ async function fetchJobDetails(jobNumber) {
     completeBtn.disabled = false;
     completeBtn.style.opacity = '1';
     completeBtn.style.cursor = 'pointer';
+    const reopenBtn = document.getElementById('reopenBtn');
+    if (reopenBtn) reopenBtn.style.display = 'none';
   }
+}
+
+// Reopen button: only visible when job is closed; on click, reopen job and refresh UI
+const reopenBtn = document.getElementById('reopenBtn');
+if (reopenBtn) {
+  reopenBtn.addEventListener('click', async () => {
+    const jobNumber = jobNumberInput.value.trim();
+    if (!jobNumber) {
+      jobSearchError.textContent = 'Please enter or select a job number first.';
+      jobSearchError.className = 'inline-warning';
+      jobSearchError.style.display = 'block';
+      return;
+    }
+    reopenBtn.disabled = true;
+    reopenBtn.style.opacity = '0.5';
+    reopenBtn.style.cursor = 'not-allowed';
+    jobSearchError.style.display = 'none';
+    try {
+      await jobsAPI.reopenJob(jobNumber);
+      jobSearchError.textContent = 'Job reopened successfully!';
+      jobSearchError.className = 'inline-success';
+      jobSearchError.style.display = 'block';
+      await fetchJobDetails(jobNumber);
+      setTimeout(() => {
+        jobSearchError.style.display = 'none';
+      }, 2000);
+    } catch (error) {
+      console.error('Error reopening job:', error);
+      jobSearchError.textContent = error.message || 'Failed to reopen job.';
+      jobSearchError.className = 'inline-warning';
+      jobSearchError.style.display = 'block';
+    } finally {
+      reopenBtn.disabled = false;
+      reopenBtn.style.opacity = '1';
+      reopenBtn.style.cursor = 'pointer';
+    }
+  });
 }
 
 jobSearchForm.addEventListener('submit', async (e) => {
